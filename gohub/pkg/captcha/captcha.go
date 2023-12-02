@@ -20,7 +20,7 @@ var once sync.Once
 var internalCaptcha *Captcha
 
 // NewCaptcha 单例模式获取
-func NewCaptcah() *Captcha {
+func NewCaptcha() *Captcha {
 
 	once.Do(func() {
 

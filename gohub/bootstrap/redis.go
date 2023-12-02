@@ -11,7 +11,7 @@ func SetupRedis() {
 
 	// 建立 Redis 连接
 	redis.ConnectRedis(
-		fmt.Sprintf("%v:%v", config.GetStringMapString("redis.host"),
+		fmt.Sprintf("%v:%v", config.GetString("redis.host"),
 			config.GetString("redis.port")),
 		config.GetString("redis.username"),
 		config.GetString("redis.password"),

@@ -31,8 +31,9 @@ func (vc *VerifyCodeController) ShowCaptcha(c *gin.Context) {
 // SendUsingPhone 发送手机验证码
 func (vc *VerifyCodeController) SendUsingPhone(c *gin.Context) {
 
-	// 1.验证表单
 	request := requests.VerifyCodePhoneRequest{}
+
+	// 1.验证表单
 	if ok := requests.Validate(c, &request, requests.VerifyCodePhone); !ok {
 		return
 	}

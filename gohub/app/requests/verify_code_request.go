@@ -34,7 +34,7 @@ func VerifyCodePhone(data interface{}, c *gin.Context) map[string][]string {
 			"图片验证码的 ID 为必填",
 		},
 		"captcha_answer": []string{
-			"required:图片验证码答案为必填",
+			"required:图片验证码为必填",
 			"digits:图片验证码长度必须为 6 位的数字",
 		},
 	}
@@ -43,9 +43,10 @@ func VerifyCodePhone(data interface{}, c *gin.Context) map[string][]string {
 
 	// 图片验证码
 	_data := data.(*VerifyCodePhoneRequest)
-	if ok := captcha.NewCaptcha().VerifyCaptcha(_data.CaptchaID, _data.CaptchaAnswer); !ok {
-		errs["captcha_answer"] = append(errs["captcha_answer"], "图片验证码错误")
-	}
 
+	if ok := captcha.NewCaptcha().VerifyCaptcha(_data.CaptchaID, _data.CaptchaAnswer); ok {
+		delete(errs, "captcha_answer")
+		//errs["captcha_answer"] = append(errs["captcha_answer"], "图片验证码错误")
+	}
 	return errs
 }

@@ -18,8 +18,8 @@ type SignupController struct {
 func (sc *SignupController) IsPhoneExist(c *gin.Context) {
 
 	// 获取请求参数，并做表单验证
-	request := &requests.SignupPhoneExistRequest{}
-	if ok := requests.Validate(c, request, requests.ValidateSignupPhoneExist); !ok {
+	request := requests.SignupPhoneExistRequest{}
+	if ok := requests.Validate(c, &request, requests.ValidateSignupPhoneExist); !ok {
 		return
 	}
 

@@ -5,13 +5,13 @@ import (
 	"sync"
 )
 
-type Form struct {
+type From struct {
 	Name    string
 	Address string
 }
 
 type Email struct {
-	From    Form
+	From    From
 	To      []string
 	Bcc     []string
 	Cc      []string

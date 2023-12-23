@@ -37,7 +37,7 @@ func (s *RedisStore) Get(key string, clear bool) string {
 }
 
 // Verify verifycode.Store interface 的 Verify 方法
-func (s RedisStore) Verify(key, answer string, clear bool) bool {
+func (s *RedisStore) Verify(key, answer string, clear bool) bool {
 	v := s.Get(key, clear)
 	return v == answer
 }

@@ -13,10 +13,10 @@ func init() {
 				"possword": config.Env("MAIL_POSSWORD", "localhost"),
 			},
 
-			"form": map[string]interface{}{
+			"from": map[string]interface{}{
 				"address": config.Env("MAIL_FORM_ADDRESS",
-					"1273444129@qq.com"),
-				"name": config.Env("MAIL_FORM_NAME", "YangRan"),
+					"gohub@example.com"),
+				"name": config.Env("MAIL_FORM_NAME", "Gohub"),
 			},
 		}
 	})

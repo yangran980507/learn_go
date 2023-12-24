@@ -33,8 +33,8 @@ func (sc *SignupController) IsPhoneExist(c *gin.Context) {
 func (sc *SignupController) IsEmailExist(c *gin.Context) {
 
 	// 获取请求参数，并做表单验证
-	request := &requests.SignupEmailExistRequest{}
-	if ok := requests.Validate(c, request, requests.ValidateSignupEmailExist); !ok {
+	request := requests.SignupEmailExistRequest{}
+	if ok := requests.Validate(c, &request, requests.ValidateSignupEmailExist); !ok {
 		return
 	}
 
@@ -42,4 +42,29 @@ func (sc *SignupController) IsEmailExist(c *gin.Context) {
 	response.JSON(c, gin.H{
 		"exist": user.IsEmailExist(request.Email),
 	})
+}
+
+func (sc *SignupController) SignupUsingPhone(c *gin.Context) {
+
+	// 1.验证表单
+	request := requests.SignupUsingPhoneRequest{}
+	if ok := requests.Validate(c, &request, requests.SignupUsingPhone); !ok {
+		return
+	}
+
+	// 2.验证成功，创建数据
+	_user := user.User{
+		Name:     request.Name,
+		Phone:    request.Phone,
+		Password: request.Password,
+	}
+	_user.Create()
+
+	if _user.ID > 0 {
+		response.CreatedJSON(c, gin.H{
+			"data": _user,
+		})
+	} else {
+		response.Abort500(c, "创建用户失败，请稍后尝试～")
+	}
 }

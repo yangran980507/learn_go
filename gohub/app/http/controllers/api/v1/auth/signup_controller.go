@@ -6,6 +6,7 @@ import (
 	"gohub/app/http/controllers/api/v1"
 	"gohub/app/models/user"
 	"gohub/app/requests"
+	"gohub/pkg/jwt"
 	"gohub/pkg/response"
 )
 
@@ -44,6 +45,7 @@ func (sc *SignupController) IsEmailExist(c *gin.Context) {
 	})
 }
 
+// SignupUsingPhone 使用手机和验证码进行注册
 func (sc *SignupController) SignupUsingPhone(c *gin.Context) {
 
 	// 1.验证表单
@@ -53,22 +55,25 @@ func (sc *SignupController) SignupUsingPhone(c *gin.Context) {
 	}
 
 	// 2.验证成功，创建数据
-	_user := user.User{
+	userModel := user.User{
 		Name:     request.Name,
 		Phone:    request.Phone,
 		Password: request.Password,
 	}
-	_user.Create()
+	userModel.Create()
 
-	if _user.ID > 0 {
+	if userModel.ID > 0 {
+		token := jwt.NewJWT().IssueToken(userModel.GetStringID(), userModel.Name)
 		response.CreatedJSON(c, gin.H{
-			"data": _user,
+			"token": token,
+			"data":  userModel,
 		})
 	} else {
-		response.Abort500(c, "创建用户失败，请稍后尝试～")
+		response.Abort500(c, "创建用户失败，请稍候尝试～")
 	}
 }
 
+// SignupUsingEmail 使用邮箱和验证码进行注册
 func (sc *SignupController) SignupUsingEmail(c *gin.Context) {
 
 	// 1.验证表单
@@ -78,18 +83,20 @@ func (sc *SignupController) SignupUsingEmail(c *gin.Context) {
 	}
 
 	// 2.验证成功，创建数据
-	_user := user.User{
+	userModel := user.User{
 		Name:     request.Name,
 		Email:    request.Email,
 		Password: request.Password,
 	}
-	_user.Create()
+	userModel.Create()
 
-	if _user.ID > 0 {
+	if userModel.ID > 0 {
+		token := jwt.NewJWT().IssueToken(userModel.GetStringID(), userModel.Name)
 		response.CreatedJSON(c, gin.H{
-			"data": _user,
+			"token": token,
+			"data":  userModel,
 		})
 	} else {
-		response.Abort500(c, "创建用户失败，请稍后尝试～")
+		response.Abort500(c, "创建用户失败，请稍候尝试～")
 	}
 }

@@ -15,3 +15,9 @@ func IsPhoneExist(phone string) bool {
 	database.DB.Model(User{}).Where("phone = ?", phone).Count(&count)
 	return count > 0
 }
+
+// GetByPhone 通过手机号来获取用户
+func GetByPhone(phone string) (userModel User) {
+	database.DB.Where("phone = ?", phone).First(&userModel)
+	return
+}

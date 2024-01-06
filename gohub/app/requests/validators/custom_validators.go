@@ -10,8 +10,8 @@ import (
 func ValidateCaptcha(captchaID, captchaAnswer string,
 	errs map[string][]string) map[string][]string {
 	if ok := captcha.NewCaptcha().VerifyCaptcha(captchaID, captchaAnswer); !ok {
-		delete(errs, "captcha_answer")
-		//errs["captcha_answer"] = append(errs["captcha_answer"], "图片验证码错误")
+		//delete(errs, "captcha_answer")
+		errs["captcha_answer"] = append(errs["captcha_answer"], "图片验证码错误")
 	}
 	return errs
 }

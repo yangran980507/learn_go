@@ -68,9 +68,10 @@ type SignupUsingPhoneRequest struct {
 func SignupUsingPhone(data interface{}, c *gin.Context) map[string][]string {
 
 	rules := govalidator.MapData{
-		"phone":            []string{"required", "digits:11", "not_exists:users,phone"},
-		"verify_code":      []string{"required", "digits:6"},
-		"name":             []string{"required", "alpha_num", "between:3,20", "not_exists:users,phone"},
+		"phone":       []string{"required", "digits:11", "not_exists:users,phone"},
+		"verify_code": []string{"required", "digits:6"},
+		"name": []string{"required", "alpha_num", "between:3,20",
+			"not_exists:users,phone"},
 		"password":         []string{"required", "min:6"},
 		"password_confirm": []string{"required"},
 	}

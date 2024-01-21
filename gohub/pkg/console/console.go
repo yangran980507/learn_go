@@ -1,5 +1,5 @@
-// Package pkg 命令行辅助方法
-package pkg
+// Package console 命令行辅助方法
+package console
 
 import (
 	"fmt"

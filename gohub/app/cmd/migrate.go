@@ -18,9 +18,18 @@ var CmdMigrateUp = &cobra.Command{
 	Run:   runUp,
 }
 
+var CmdMigrateRollBack = &cobra.Command{
+	Use: "down",
+	//设置别名
+	Aliases: []string{"rollback"},
+	Short:   "Reverse the up command",
+	Run:     runDown,
+}
+
 func init() {
 	CmdMigrate.AddCommand(
 		CmdMigrateUp,
+		CmdMigrateRollBack,
 	)
 }
 
@@ -33,4 +42,8 @@ func migrator() *migrate.Migrator {
 
 func runUp(cmd *cobra.Command, args []string) {
 	migrator().Up()
+}
+
+func runDown(cmd *cobra.Command, args []string) {
+	migrator().RollBack()
 }

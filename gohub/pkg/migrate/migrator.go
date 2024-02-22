@@ -108,6 +108,25 @@ func (migrator *Migrator) rollBackMIgrations(migrations []Migration) bool {
 	return runed
 }
 
+// ReSet 回滚所有迁移
+func (migrator Migrator) ReSet() {
+	var migrations []Migration
+	migrator.DB.Order("id DESC").Find(&migrations)
+
+	if !migrator.rollBackMIgrations(migrations) {
+		console.Success("[migrations] table is empty,nothing to reset")
+	}
+}
+
+// ReFresh 回滚所有迁移，并运行所有迁移
+func (migrator *Migrator) ReFresh() {
+	//回滚所有迁移
+	migrator.ReSet()
+
+	//再次执行所有迁移
+	migrator.Up()
+}
+
 // 获取当前批次的值
 func (migrator *Migrator) getBatch() int {
 	//默认为 1

@@ -23,5 +23,5 @@ func MakeUsers(times int) []user.User {
 		}
 		objs = append(objs, model)
 	}
-
+	return objs
 }

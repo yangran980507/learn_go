@@ -12,7 +12,7 @@ import (
 )
 
 func init() {
-	seed.Add("seederUserTable", func(db *gorm.DB) {
+	seed.Add("SeedUserTable", func(db *gorm.DB) {
 		// 创建 10 个用户对象
 		users := factories.MakeUsers(10)
 

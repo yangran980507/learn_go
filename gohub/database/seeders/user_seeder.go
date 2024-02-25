@@ -26,7 +26,7 @@ func init() {
 		}
 
 		//打印运行情况
-		console.Success(fmt.Sprintf("Table [%v] %v rows seeds", result.Statement.Table,
+		console.Success(fmt.Sprintf("Table [%v] %v rows seeded", result.Statement.Table,
 			result.RowsAffected))
 	})
 }

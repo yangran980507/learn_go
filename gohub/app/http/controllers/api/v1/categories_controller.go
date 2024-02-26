@@ -56,3 +56,17 @@ func (ctrl *CategoriesController) Update(c *gin.Context) {
 		response.Abort500(c)
 	}
 }
+
+func (ctrl *CategoriesController) Index(c *gin.Context) {
+	//表单验证
+	request := requests.CategoryRequest{}
+	if ok := requests.Validate(c, &request, requests.Pagination); !ok {
+		return
+	}
+
+	data, pager := category.Paginate(c, 10)
+	response.JSON(c, gin.H{
+		"data":  data,
+		"pager": pager,
+	})
+}

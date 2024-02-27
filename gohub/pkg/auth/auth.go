@@ -44,5 +44,5 @@ func CurrentUser(c *gin.Context) user.User {
 
 // CurrentUID 从 gin.context 中获取当前登录用户 ID
 func CurrentUID(c *gin.Context) string {
-	return c.GetString("current_user")
+	return c.GetString("current_user_id")
 }

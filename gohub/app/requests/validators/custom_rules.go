@@ -90,4 +90,27 @@ func init() {
 		}
 		return nil
 	})
+
+	//验证数据库存在某条数据
+	//rule:自定义的规则 value:验证的内容 message:自定义的返回信息 filed:
+	govalidator.AddCustomRule("exists", func(field string, rule string,
+		message string, value interface{}) error {
+		rng := strings.Split(strings.TrimPrefix(rule, "exists:"), ",")
+
+		tableName := rng[0]
+		dbFiled := rng[1]
+
+		requestValue := value.(string)
+
+		var count int64
+		database.DB.Table(tableName).Where(dbFiled+"= ?", requestValue).Count(&count)
+
+		if count == 0 {
+			if message != "" {
+				return errors.New(message)
+			}
+			return fmt.Errorf("%v 不存在", requestValue)
+		}
+		return nil
+	})
 }

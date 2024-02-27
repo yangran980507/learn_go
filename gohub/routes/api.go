@@ -59,7 +59,6 @@ func RegisterAPIRoutes(r *gin.Engine) {
 				pwc.ResetByEmail)
 
 			uc := new(controllers.UsersController)
-
 			// 获取当前用户
 			v1.GET("/user", middlewares.AuthJWT(), uc.CurrentUser)
 			usersGroup := v1.Group("/users")
@@ -74,6 +73,12 @@ func RegisterAPIRoutes(r *gin.Engine) {
 				cgcGroup.POST("", middlewares.AuthJWT(), cgc.Store)
 				cgcGroup.PUT("/:id", middlewares.GuestJWT(), cgc.Update)
 				cgcGroup.DELETE("/:id", middlewares.GuestJWT(), cgc.Delete)
+			}
+
+			tpc := new(controllers.TopicsController)
+			tpcGroup := v1.Group("/topics")
+			{
+				tpcGroup.POST("", middlewares.AuthJWT(), tpc.Store)
 			}
 		}
 	}

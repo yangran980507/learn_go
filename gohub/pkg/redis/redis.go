@@ -134,3 +134,27 @@ func (rds RedisClient) Decrement(parameters ...interface{}) bool {
 	}
 	return true
 }
+
+// Increment 当参数只有 1 个时，为 key，其值增加 1。
+// 当参数有 2 个时，第一个参数为 key ，第二个参数为要增加的值 int64 类型。
+func (rds RedisClient) Increment(parameters ...interface{}) bool {
+	switch len(parameters) {
+	case 1:
+		key := parameters[0].(string)
+		if err := rds.Client.Incr(rds.Context, key).Err(); err != nil {
+			logger.ErrorString("Redis", "Increment", err.Error())
+			return false
+		}
+	case 2:
+		key := parameters[0].(string)
+		value := parameters[1].(int64)
+		if err := rds.Client.IncrBy(rds.Context, key, value).Err(); err != nil {
+			logger.ErrorString("Redis", "Increment", err.Error())
+			return false
+		}
+	default:
+		logger.ErrorString("Redis", "Increment", "参数过多")
+		return false
+	}
+	return true
+}

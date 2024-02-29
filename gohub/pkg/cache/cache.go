@@ -43,7 +43,7 @@ func Has(key string) bool {
 	return Cache.Store.Has(key)
 }
 
-func GetObject(key string, wanted any) {
+func GetObject(key string, wanted interface{}) {
 	val := Cache.Store.Get(key)
 	if len(val) > 0 {
 		err := json.Unmarshal([]byte(val), &wanted)

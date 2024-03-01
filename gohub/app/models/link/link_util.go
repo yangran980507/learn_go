@@ -48,7 +48,6 @@ func AllCached() (links interface{}) {
 	expireTime := 120 * time.Minute
 	cache.GetObject(cacheKey, &links)
 	//links = cache.Get(cacheKey)
-
 	if helpers.Empty(links) {
 		links = All()
 		if helpers.Empty(links) {

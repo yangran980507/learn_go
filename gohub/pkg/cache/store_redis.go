@@ -24,7 +24,7 @@ func (s *RedisStore) Set(key string, value string, expireTime time.Duration) {
 }
 
 func (s *RedisStore) Get(key string) string {
-	return s.Get(s.KeyPrefix + key)
+	return s.RedisClient.Get(s.KeyPrefix + key)
 }
 
 func (s *RedisStore) Has(key string) bool {

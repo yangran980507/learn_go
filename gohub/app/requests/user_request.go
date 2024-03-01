@@ -40,3 +40,12 @@ func UserUpdateProfile(data interface{}, c *gin.Context) map[string][]string {
 	}
 	return validate(data, rules, messages)
 }
+
+type UserUpdateEmailRequest struct {
+	Email      string `json:"email,omitempty" valid:"email"`
+	VerifyCode string `json:"verify_code,omitempty" valid:"verify_code"`
+}
+
+/*func UserUpdateEmail(data interface{},c *gin.Context) map[string][]string {
+
+}*/

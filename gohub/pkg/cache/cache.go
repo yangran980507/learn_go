@@ -3,6 +3,7 @@ package cache
 
 import (
 	"encoding/json"
+	"fmt"
 	"gohub/pkg/logger"
 	"sync"
 	"time"
@@ -32,6 +33,7 @@ func Set(key string, obj interface{}, expireTime time.Duration) {
 }
 
 func Get(key string) any {
+	fmt.Println("123")
 	stringValue := Cache.Store.Get(key)
 	var wanted any
 	err := json.Unmarshal([]byte(stringValue), &wanted)

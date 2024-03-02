@@ -64,7 +64,7 @@ func UserUpdateEmail(data interface{}, c *gin.Context) map[string][]string {
 	massages := govalidator.MapData{
 		"email": []string{
 			"required: Email 为必填项",
-			"min: Emial 长度需大于 4",
+			"min: Email 长度需大于 4",
 			"max: Email 长度需小于 30",
 			"email: Email 格式不正确，清提供有效的邮箱地址",
 			"not_exist: Email 已经被占用",
@@ -79,6 +79,43 @@ func UserUpdateEmail(data interface{}, c *gin.Context) map[string][]string {
 	errs := validate(data, rules, massages)
 	_data := data.(*UserUpdateEmailRequest)
 	errs = validators.ValidateVerifyCode(_data.Email, _data.VerifyCode, errs)
+
+	return errs
+}
+
+type UserUpdatePhoneRequest struct {
+	Phone      string `json:"phone,omitempty" valid:"phone"`
+	VerifyCode string `json:"verify_code,omitempty" valid:"verify_code"`
+}
+
+func UserUpdatePhone(data interface{}, c *gin.Context) map[string][]string {
+	currentUser := auth.CurrentUser(c)
+	rules := govalidator.MapData{
+		"phone": []string{
+			"required",
+			"digits:11",
+			"not_exists:users,phone," + currentUser.GetStringID(),
+			"not_in:" + currentUser.Phone,
+		},
+		"verify_code": []string{"required", "digits:6"},
+	}
+
+	massages := govalidator.MapData{
+		"email": []string{
+			"required: Email 为必填项",
+			"digits:手机号长度必须为 11 位的数字",
+			"not_exist: 手机号已经被占用",
+			"not_in: 新的手机号和老手机号一致",
+		},
+		"verify_code": []string{
+			"required:验证码答案为必填",
+			"digits:验证码长度必须为 6 位的数字",
+		},
+	}
+
+	errs := validate(data, rules, massages)
+	_data := data.(*UserUpdatePhoneRequest)
+	errs = validators.ValidateVerifyCode(_data.Phone, _data.VerifyCode, errs)
 
 	return errs
 }

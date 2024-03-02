@@ -5,6 +5,7 @@ import (
 	controllers "gohub/app/http/controllers/api/v1"
 	"gohub/app/http/controllers/api/v1/auth"
 	"gohub/app/http/middlewares"
+	"gohub/pkg/config"
 
 	"github.com/gin-gonic/gin"
 )
@@ -13,7 +14,12 @@ import (
 func RegisterAPIRoutes(r *gin.Engine) {
 
 	// 测试一个 v1 的路由组，我们所有的 v1 版本的路由都将存放到这里
-	v1 := r.Group("/v1")
+	var v1 *gin.RouterGroup
+	if len(config.Get("api.api_domain")) == 0 {
+		v1 = r.Group("/api/v1")
+	} else {
+		v1 = r.Group("/v1")
+	}
 
 	v1.Use(middlewares.LimitIP("200-H"))
 	{

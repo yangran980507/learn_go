@@ -1,6 +1,5 @@
 tmp
 .env
-.env.example
 gohub
 .DS_Store
 .history

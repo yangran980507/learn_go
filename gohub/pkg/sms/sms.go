@@ -1,7 +1,7 @@
 package sms
 
 import (
-	"gohub/pkg/config"
+	//"gohub/pkg/config"
 	"sync"
 )
 
@@ -36,5 +36,6 @@ func NewSMS() *SMS {
 }
 
 func (sms *SMS) Send(phone string, message Message) bool {
-	return sms.Driver.Send(phone, message, config.GetStringMapString("sms.aliyun"))
+	//return sms.Driver.Send(phone, message, config.GetStringMapString("sms.aliyun"))
+	return true
 }

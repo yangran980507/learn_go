@@ -31,7 +31,7 @@ func init() {
 			"timezone": config.Env("TIMEZONE", "Asia/Shanghai"),
 
 			// API 域名，未设置所有路径加 api 前缀
-			"api_domain": config.Env("API_DOMAIN"),
+			"api_domain": config.Env("API_DOMAIN", 1),
 		}
 	})
 }
